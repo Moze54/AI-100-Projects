@@ -1,0 +1,5 @@
+# ZCode 本地配置
+.zcode/
+
+# 归档工程的构建产物（APK/预览图，可由源码重建）
+projects/001-personal-life-manager/archive/app-flutter/dist/

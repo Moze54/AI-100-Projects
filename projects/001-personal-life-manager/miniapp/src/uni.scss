@@ -1,0 +1,82 @@
+/**
+ * 拾记设计令牌（全局注入，只放变量 / 函数 / mixin，避免重复产出 CSS）
+ *
+ * 设计稿基准：426dp 宽（原 852px @2x）。
+ * 小程序 750rpx = 屏幕宽度，因此 1dp = 750 / 426 = 1.760563rpx。
+ * 所有从 Flutter 源码移植的尺寸、字号、间距均通过 dp() 换算。
+ */
+
+$design-width: 426;
+$rpx-ratio: 1.760563;
+
+@function dp($value) {
+  @return ($value * $rpx-ratio) * 1rpx;
+}
+
+/* ---------- 色板（与 Flutter AppColors 一一对应） ---------- */
+$navy: #1b2d55;
+$text-sub: #8a94b8;
+$text-light: #a6afc9;
+$primary: #4a87f8;
+$primary-deep: #3d7bf5;
+$primary-light: #6ba4ff;
+$pink: #ff8fb0;
+$red: #f5484e;
+$divider: #e3ecf9;
+$chevron: #b9c4de;
+$nav-inactive: #99a3b9;
+$scaffold: #d9e7fe;
+
+/* ---------- 渐变（Flutter topLeft → bottomRight = CSS 135deg） ---------- */
+$grad-blue: linear-gradient(135deg, #6ba4ff 0%, #3d7bf5 100%);
+$grad-purple: linear-gradient(135deg, #b49bff 0%, #8f6bff 100%);
+$grad-teal: linear-gradient(135deg, #57d0be 0%, #2fb8a8 100%);
+$grad-orange: linear-gradient(135deg, #ffc46b 0%, #ff9d42 100%);
+$grad-green: linear-gradient(135deg, #74d89e 0%, #3dbb7a 100%);
+$grad-grey: linear-gradient(135deg, #d6dce8 0%, #b9c1d2 100%);
+$grad-pink: linear-gradient(135deg, #ffa6c1 0%, #ff7ba3 100%);
+
+/* ---------- 圆角 ---------- */
+$radius-card: dp(18);
+$radius-icon: dp(12);
+$radius-chip: dp(8);
+$radius-nav-top: dp(28);
+$radius-bottom-bar: dp(24);
+
+/* ---------- 投影（设计稿：极淡的蓝紫柔光，只向下扩散） ---------- */
+$shadow-glass: 0 dp(6) dp(20) rgba(92, 122, 190, 0.09);
+$shadow-glass-strong: 0 dp(6) dp(18) rgba(92, 122, 190, 0.14);
+$shadow-fab: 0 dp(7) dp(18) rgba(61, 123, 245, 0.30);
+$shadow-pill: 0 dp(5) dp(14) rgba(61, 123, 245, 0.27);
+
+/* ---------- 字体 ---------- */
+$font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue",
+  "Microsoft YaHei", sans-serif;
+
+/* ---------- 通用 mixin ---------- */
+
+/* 单行/多行省略；flex 子项需同时设置 min-width: 0 */
+@mixin ellipsis($lines: 1) {
+  @if $lines == 1 {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  } @else {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $lines;
+  }
+}
+
+/* 毛玻璃表面：半透明白 + 白描边 + 背景模糊 */
+@mixin glass-surface($radius: $radius-card, $alpha: 0.55) {
+  background-color: rgba(255, 255, 255, $alpha);
+  border: 1px solid rgba(255, 255, 255, 0.70);
+  border-radius: $radius;
+}
+
+@mixin backdrop-blur($size: 16) {
+  -webkit-backdrop-filter: blur(dp($size));
+  backdrop-filter: blur(dp($size));
+}

@@ -1,0 +1,15 @@
+<view class="gnb">
+  <view class="gnb-row">
+    <view
+      wx:for="{{items}}"
+      wx:key="label"
+      class="gnb-item"
+      data-index="{{index}}"
+      bindtap="onTap"
+    >
+      <text class="gnb-icon {{active === index ? 'gnb-icon-active' : ''}}">{{item.icon}}</text>
+      <text class="gnb-label {{active === index ? 'gnb-label-active' : ''}}">{{item.label}}</text>
+      <view class="gnb-indicator {{active === index ? 'gnb-indicator-active' : ''}}"></view>
+    </view>
+  </view>
+</view>
